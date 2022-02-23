@@ -1,0 +1,45 @@
+<div class="row">
+<div class="col-md-6">
+<form [formGroup]="productForm"  >
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" [(ngModel)]="editedProduct.title" class="form-control" formControlName="title" [ngClass]="{ 'is-invalid': isSubmitted && form.title.errors }">
+    <div class="alert alert-danger" *ngIf="form.title.touched && form.title.invalid">
+Title is required
+    </div>
+    </div>
+    <div class="form-group">
+            <label for="price">Price</label>
+        <span class="input-group-addon">$</span>
+        <input type="number" id="price"  [(ngModel)]="editedProduct.price" class="form-control" formControlName="price" [ngClass]="{ 'is-invalid': isSubmitted && form.price.errors }">
+        <div class="alert alert-danger" *ngIf="form.price.touched && form.price.invalid">
+            Price is required
+                </div>
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" class="form-control"  [(ngModel)]="editedProduct.category"  formControlName="category" [ngClass]="{ 'is-invalid': isSubmitted && form.category.errors }">
+            <option *ngFor="let c of categories$ | async" [value]="c.name">{{c.name}}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="form.category.touched && form.category.invalid">
+            Category is required
+                </div>
+    </div>
+    <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input type="text" id="imageUrl"  [(ngModel)]="editedProduct.imageUrl"  class="form-control" formControlName="imageUrl" [ngClass]="{ 'is-invalid': isSubmitted && form.imageUrl.errors }" >
+    </div>
+    <button class="btn btn-primary"(click)="create()">Save</button>
+    <button class="btn btn-danger"(click)="delete()">Delete</button>
+</form>
+</div>
+<div class="col-md-6">
+    <div class="card" style="width :20rem;">
+    <img class="card-img-top" [src]="form.imageUrl.value" alt="card i,age cap">
+<div class="card-body">
+<h4 class="card-title">{{form.title.value}}</h4>
+<p class="card-text">{{form.price.value | currency:'USD':true}}</p>
+</div>    
+</div>
+</div>
+</div>
